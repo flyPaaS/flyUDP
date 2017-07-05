@@ -1,0 +1,468 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5AC674A51EF7D58100147994 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC674A41EF7D58100147994 /* AppDelegate.m */; };
+		5AC674A81EF7D58100147994 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AC674A71EF7D58100147994 /* main.m */; };
+		5AC674AD1EF7D58100147994 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AC674AC1EF7D58100147994 /* Assets.xcassets */; };
+		5AF5F2641EF8BA580059B128 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F2621EF8BA580059B128 /* MainViewController.m */; };
+		5AF5F2651EF8BA580059B128 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AF5F2631EF8BA580059B128 /* Main.storyboard */; };
+		5AF5F26E1EF8BEA00059B128 /* buttonback.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AF5F26A1EF8BEA00059B128 /* buttonback.png */; };
+		5AF5F26F1EF8BEA00059B128 /* checkBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AF5F26B1EF8BEA00059B128 /* checkBtn.png */; };
+		5AF5F2701EF8BEA00059B128 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AF5F26C1EF8BEA00059B128 /* logo.png */; };
+		5AF5F2711EF8BEA00059B128 /* unCheckBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 5AF5F26D1EF8BEA00059B128 /* unCheckBtn.png */; };
+		5AF5F2751EF8BF4B0059B128 /* IpTalbeCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F2741EF8BF4B0059B128 /* IpTalbeCellView.m */; };
+		5AF5F2821EF8F8480059B128 /* FlyRTCSDK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5F2771EF8F8480059B128 /* FlyRTCSDK.cpp */; };
+		5AF5F2831EF8F8480059B128 /* ugo-Mac-lib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F27D1EF8F8480059B128 /* ugo-Mac-lib.a */; };
+		5AF5F2841EF8F8480059B128 /* vigo-Mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F2801EF8F8480059B128 /* vigo-Mac.a */; };
+		5AF5F2871EF8F9F50059B128 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F2861EF8F9F50059B128 /* AVFoundation.framework */; };
+		5AF5F28B1EF8FA210059B128 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F28A1EF8FA210059B128 /* CoreMedia.framework */; };
+		5AF5F28D1EF8FA300059B128 /* CoreAudio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F28C1EF8FA300059B128 /* CoreAudio.framework */; };
+		5AF5F28F1EF8FA3F0059B128 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F28E1EF8FA3F0059B128 /* AudioToolbox.framework */; };
+		5AF5F2911EF8FA520059B128 /* libstdc++.6.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F2901EF8FA520059B128 /* libstdc++.6.tbd */; };
+		5AF5F2931EF901B40059B128 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F2921EF901B40059B128 /* QuartzCore.framework */; };
+		5AF5F2951EF901C70059B128 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F2941EF901C70059B128 /* OpenGL.framework */; };
+		5AF5F2971EF901D40059B128 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F2961EF901D40059B128 /* CoreGraphics.framework */; };
+		5AF5F2991EF901EA0059B128 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF5F2981EF901EA0059B128 /* AppKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5AC674A01EF7D58100147994 /* flyUDP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = flyUDP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AC674A31EF7D58100147994 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		5AC674A41EF7D58100147994 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		5AC674A71EF7D58100147994 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5AC674AC1EF7D58100147994 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5AC674B11EF7D58100147994 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5AF5F2611EF8BA580059B128 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		5AF5F2621EF8BA580059B128 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		5AF5F2631EF8BA580059B128 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		5AF5F2661EF8BB2B0059B128 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		5AF5F2671EF8BBA10059B128 /* AppHeaders.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppHeaders.h; sourceTree = "<group>"; };
+		5AF5F26A1EF8BEA00059B128 /* buttonback.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = buttonback.png; sourceTree = "<group>"; };
+		5AF5F26B1EF8BEA00059B128 /* checkBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkBtn.png; sourceTree = "<group>"; };
+		5AF5F26C1EF8BEA00059B128 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		5AF5F26D1EF8BEA00059B128 /* unCheckBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unCheckBtn.png; sourceTree = "<group>"; };
+		5AF5F2731EF8BF4B0059B128 /* IpTalbeCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IpTalbeCellView.h; sourceTree = "<group>"; };
+		5AF5F2741EF8BF4B0059B128 /* IpTalbeCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IpTalbeCellView.m; sourceTree = "<group>"; };
+		5AF5F2771EF8F8480059B128 /* FlyRTCSDK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlyRTCSDK.cpp; sourceTree = "<group>"; };
+		5AF5F2781EF8F8480059B128 /* FlyRTCSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlyRTCSDK.h; sourceTree = "<group>"; };
+		5AF5F2791EF8F8480059B128 /* MacVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MacVideoView.h; sourceTree = "<group>"; };
+		5AF5F27A1EF8F8480059B128 /* MediaEngineCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaEngineCommon.h; sourceTree = "<group>"; };
+		5AF5F27B1EF8F8480059B128 /* MediaEngineInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaEngineInterface.h; sourceTree = "<group>"; };
+		5AF5F27C1EF8F8480059B128 /* typedef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = typedef.h; sourceTree = "<group>"; };
+		5AF5F27D1EF8F8480059B128 /* ugo-Mac-lib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "ugo-Mac-lib.a"; sourceTree = "<group>"; };
+		5AF5F27E1EF8F8480059B128 /* ugo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ugo.h; sourceTree = "<group>"; };
+		5AF5F27F1EF8F8480059B128 /* ugo_comm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ugo_comm.h; sourceTree = "<group>"; };
+		5AF5F2801EF8F8480059B128 /* vigo-Mac.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "vigo-Mac.a"; sourceTree = "<group>"; };
+		5AF5F2811EF8F8480059B128 /* ViGoEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViGoEngine.h; sourceTree = "<group>"; };
+		5AF5F2861EF8F9F50059B128 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		5AF5F2881EF8FA0A0059B128 /* VideoToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoToolbox.framework; path = System/Library/Frameworks/VideoToolbox.framework; sourceTree = SDKROOT; };
+		5AF5F28A1EF8FA210059B128 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		5AF5F28C1EF8FA300059B128 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		5AF5F28E1EF8FA3F0059B128 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5AF5F2901EF8FA520059B128 /* libstdc++.6.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.6.tbd"; path = "usr/lib/libstdc++.6.tbd"; sourceTree = SDKROOT; };
+		5AF5F2921EF901B40059B128 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5AF5F2941EF901C70059B128 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		5AF5F2961EF901D40059B128 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5AF5F2981EF901EA0059B128 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5AC6749D1EF7D58100147994 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AF5F2991EF901EA0059B128 /* AppKit.framework in Frameworks */,
+				5AF5F2971EF901D40059B128 /* CoreGraphics.framework in Frameworks */,
+				5AF5F2951EF901C70059B128 /* OpenGL.framework in Frameworks */,
+				5AF5F2931EF901B40059B128 /* QuartzCore.framework in Frameworks */,
+				5AF5F2911EF8FA520059B128 /* libstdc++.6.tbd in Frameworks */,
+				5AF5F28F1EF8FA3F0059B128 /* AudioToolbox.framework in Frameworks */,
+				5AF5F28D1EF8FA300059B128 /* CoreAudio.framework in Frameworks */,
+				5AF5F28B1EF8FA210059B128 /* CoreMedia.framework in Frameworks */,
+				5AF5F2871EF8F9F50059B128 /* AVFoundation.framework in Frameworks */,
+				5AF5F2841EF8F8480059B128 /* vigo-Mac.a in Frameworks */,
+				5AF5F2831EF8F8480059B128 /* ugo-Mac-lib.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5AC674971EF7D58100147994 = {
+			isa = PBXGroup;
+			children = (
+				5AF5F2761EF8F8480059B128 /* KCTSDK */,
+				5AC674A21EF7D58100147994 /* Mac_UDP_Demo */,
+				5AC674A11EF7D58100147994 /* Products */,
+				5AF5F2851EF8F9F50059B128 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		5AC674A11EF7D58100147994 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5AC674A01EF7D58100147994 /* flyUDP.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5AC674A21EF7D58100147994 /* Mac_UDP_Demo */ = {
+			isa = PBXGroup;
+			children = (
+				5AF5F25E1EF8BA580059B128 /* Config */,
+				5AF5F2681EF8BEA00059B128 /* Resources */,
+				5AF5F25F1EF8BA580059B128 /* GUI */,
+				5AC674A31EF7D58100147994 /* AppDelegate.h */,
+				5AC674A41EF7D58100147994 /* AppDelegate.m */,
+				5AC674AC1EF7D58100147994 /* Assets.xcassets */,
+				5AC674B11EF7D58100147994 /* Info.plist */,
+				5AC674A61EF7D58100147994 /* Supporting Files */,
+			);
+			path = Mac_UDP_Demo;
+			sourceTree = "<group>";
+		};
+		5AC674A61EF7D58100147994 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				5AC674A71EF7D58100147994 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5AF5F25E1EF8BA580059B128 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				5AF5F2661EF8BB2B0059B128 /* PrefixHeader.pch */,
+				5AF5F2671EF8BBA10059B128 /* AppHeaders.h */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		5AF5F25F1EF8BA580059B128 /* GUI */ = {
+			isa = PBXGroup;
+			children = (
+				5AF5F2721EF8BEF80059B128 /* CustomView */,
+				5AF5F2601EF8BA580059B128 /* Main */,
+				5AF5F2631EF8BA580059B128 /* Main.storyboard */,
+			);
+			path = GUI;
+			sourceTree = "<group>";
+		};
+		5AF5F2601EF8BA580059B128 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				5AF5F2611EF8BA580059B128 /* MainViewController.h */,
+				5AF5F2621EF8BA580059B128 /* MainViewController.m */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		5AF5F2681EF8BEA00059B128 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5AF5F2691EF8BEA00059B128 /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5AF5F2691EF8BEA00059B128 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				5AF5F26A1EF8BEA00059B128 /* buttonback.png */,
+				5AF5F26B1EF8BEA00059B128 /* checkBtn.png */,
+				5AF5F26C1EF8BEA00059B128 /* logo.png */,
+				5AF5F26D1EF8BEA00059B128 /* unCheckBtn.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		5AF5F2721EF8BEF80059B128 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				5AF5F2731EF8BF4B0059B128 /* IpTalbeCellView.h */,
+				5AF5F2741EF8BF4B0059B128 /* IpTalbeCellView.m */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		5AF5F2761EF8F8480059B128 /* KCTSDK */ = {
+			isa = PBXGroup;
+			children = (
+				5AF5F2771EF8F8480059B128 /* FlyRTCSDK.cpp */,
+				5AF5F2781EF8F8480059B128 /* FlyRTCSDK.h */,
+				5AF5F2791EF8F8480059B128 /* MacVideoView.h */,
+				5AF5F27A1EF8F8480059B128 /* MediaEngineCommon.h */,
+				5AF5F27B1EF8F8480059B128 /* MediaEngineInterface.h */,
+				5AF5F27C1EF8F8480059B128 /* typedef.h */,
+				5AF5F27D1EF8F8480059B128 /* ugo-Mac-lib.a */,
+				5AF5F27E1EF8F8480059B128 /* ugo.h */,
+				5AF5F27F1EF8F8480059B128 /* ugo_comm.h */,
+				5AF5F2801EF8F8480059B128 /* vigo-Mac.a */,
+				5AF5F2811EF8F8480059B128 /* ViGoEngine.h */,
+			);
+			path = KCTSDK;
+			sourceTree = "<group>";
+		};
+		5AF5F2851EF8F9F50059B128 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5AF5F2981EF901EA0059B128 /* AppKit.framework */,
+				5AF5F2961EF901D40059B128 /* CoreGraphics.framework */,
+				5AF5F2941EF901C70059B128 /* OpenGL.framework */,
+				5AF5F2921EF901B40059B128 /* QuartzCore.framework */,
+				5AF5F2901EF8FA520059B128 /* libstdc++.6.tbd */,
+				5AF5F28E1EF8FA3F0059B128 /* AudioToolbox.framework */,
+				5AF5F28C1EF8FA300059B128 /* CoreAudio.framework */,
+				5AF5F28A1EF8FA210059B128 /* CoreMedia.framework */,
+				5AF5F2881EF8FA0A0059B128 /* VideoToolbox.framework */,
+				5AF5F2861EF8F9F50059B128 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5AC6749F1EF7D58100147994 /* Mac_UDP_Demo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5AC674B41EF7D58100147994 /* Build configuration list for PBXNativeTarget "Mac_UDP_Demo" */;
+			buildPhases = (
+				5AC6749C1EF7D58100147994 /* Sources */,
+				5AC6749D1EF7D58100147994 /* Frameworks */,
+				5AC6749E1EF7D58100147994 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Mac_UDP_Demo;
+			productName = Mac_UDP_Demo;
+			productReference = 5AC674A01EF7D58100147994 /* flyUDP.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5AC674981EF7D58100147994 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = flypass;
+				TargetAttributes = {
+					5AC6749F1EF7D58100147994 = {
+						CreatedOnToolsVersion = 8.3.2;
+						DevelopmentTeam = NSUMRZX66K;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 5AC6749B1EF7D58100147994 /* Build configuration list for PBXProject "Mac_UDP_Demo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 5AC674971EF7D58100147994;
+			productRefGroup = 5AC674A11EF7D58100147994 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5AC6749F1EF7D58100147994 /* Mac_UDP_Demo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5AC6749E1EF7D58100147994 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AF5F2711EF8BEA00059B128 /* unCheckBtn.png in Resources */,
+				5AF5F2651EF8BA580059B128 /* Main.storyboard in Resources */,
+				5AF5F2701EF8BEA00059B128 /* logo.png in Resources */,
+				5AF5F26F1EF8BEA00059B128 /* checkBtn.png in Resources */,
+				5AF5F26E1EF8BEA00059B128 /* buttonback.png in Resources */,
+				5AC674AD1EF7D58100147994 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5AC6749C1EF7D58100147994 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AF5F2821EF8F8480059B128 /* FlyRTCSDK.cpp in Sources */,
+				5AF5F2751EF8BF4B0059B128 /* IpTalbeCellView.m in Sources */,
+				5AC674A81EF7D58100147994 /* main.m in Sources */,
+				5AF5F2641EF8BA580059B128 /* MainViewController.m in Sources */,
+				5AC674A51EF7D58100147994 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5AC674B21EF7D58100147994 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5AC674B31EF7D58100147994 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		5AC674B51EF7D58100147994 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = NSUMRZX66K;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Mac_UDP_Demo/Config/PrefixHeader.pch;
+				INFOPLIST_FILE = Mac_UDP_Demo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KCTSDK",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "KCT.Mac-UDP-Demo";
+				PRODUCT_NAME = flyUDP;
+			};
+			name = Debug;
+		};
+		5AC674B61EF7D58100147994 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = NSUMRZX66K;
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = Mac_UDP_Demo/Config/PrefixHeader.pch;
+				INFOPLIST_FILE = Mac_UDP_Demo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/KCTSDK",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "KCT.Mac-UDP-Demo";
+				PRODUCT_NAME = flyUDP;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5AC6749B1EF7D58100147994 /* Build configuration list for PBXProject "Mac_UDP_Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AC674B21EF7D58100147994 /* Debug */,
+				5AC674B31EF7D58100147994 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5AC674B41EF7D58100147994 /* Build configuration list for PBXNativeTarget "Mac_UDP_Demo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5AC674B51EF7D58100147994 /* Debug */,
+				5AC674B61EF7D58100147994 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5AC674981EF7D58100147994 /* Project object */;
+}
