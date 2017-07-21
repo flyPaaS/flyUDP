@@ -66,7 +66,7 @@ public class VideoActivity extends Activity {
         int nMode = getIntent().getIntExtra("mode", 0);
         String stream = getIntent().getStringExtra("stream");
         TextView title = (TextView)findViewById(R.id.rl_text);
-        if (nMode == 0) {
+        if (nMode == 2) {
             String str = "UdpPush(" + stream + ")";
             title.setText(str);
         }

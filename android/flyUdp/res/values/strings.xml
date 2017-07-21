@@ -22,4 +22,19 @@
     <string name="resp_udp_fail">服务器应答失败</string>
     <string name="resp_udp_ip">获取服务器列表成功</string>
     <string name="resp_udp_ip_fail">获取服务器列表失败</string>
+    <string name="app_rtmp_tital_push">RtmpPush</string>
+    <string name="app_rtmp_tital_pull">RtmpPull</string>
+    <string name="app_rtmp_push_cap">CAP</string>
+    <string name="app_edit">Edit</string>
+    <string name="app_edit_title">Config</string>
+    <string name="app_edit_done">Done</string>
+    <string name="app_edit_IP1">Rest API IP:</string>
+    <string name="app_edit_IP2">CPS API IP:</string>
+    <string name="app_edit_IP3">UDP API IP:</string>
+    <string name="app_edit_hint">请输入服务器地址</string>
+    <string name="app_edit_rest_api">60.205.137.243:80</string>
+    <string name="app_edit_cps_api">59.110.10.28:8097</string>
+    <string name="app_edit_udp_api">59.110.10.28:8097</string>
+    <string name="app_edit_push_set">Push码率设置</string>
+    <string name="app_edit_server">服务器地址不能为空</string>
 </resources>

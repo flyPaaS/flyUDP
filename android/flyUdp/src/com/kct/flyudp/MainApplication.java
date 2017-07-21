@@ -16,6 +16,8 @@ import static com.gl.softphone.UGoAPIParam.EventTypeEnum.eME_VIDEO_NETWORK_STATE
  */
 
 public class MainApplication extends Application implements ViGoManager.IViGoCallbacks {
+	// TAG
+	public static final String TAG = "KC";
     // 操作对象
     public ViGoManager mViGoManager = null;
     public static MainApplication mMainApplication = null;
@@ -25,7 +27,14 @@ public class MainApplication extends Application implements ViGoManager.IViGoCal
         }
         return mMainApplication;
     }
-    // 保存返回参数
+    // RTMP 返回参数
+    public String strRouteId = "";
+    public String strSrcIp = "";
+    public String strSrcPort = "";
+    public String strDstIp = "";
+    public String strDstPort = "";
+    
+    // UDP 返回参数
     public String strIp = "";
     public String straPort = "";
     public String strvPort = "";
@@ -77,10 +86,10 @@ public class MainApplication extends Application implements ViGoManager.IViGoCal
 
     @Override
     public void eventCallback(int ev_type, int ev_reason, String message, String param) {
-        Log.d("udpPush", "eventCallback ev_type = " + ev_type);
-        Log.d("udpPush", "eventCallback ev_reason = " + ev_reason);
-        Log.d("udpPush", "eventCallback message = " + message);
-        Log.d("udpPush", "eventCallback param = " + param);
+        Log.d(TAG, "eventCallback ev_type = " + ev_type);
+        Log.d(TAG, "eventCallback ev_reason = " + ev_reason);
+        Log.d(TAG, "eventCallback message = " + message);
+        Log.d(TAG, "eventCallback param = " + param);
 
         UGoAPIParam.EventTypeEnum eventType = UGoAPIParam.EventTypeEnum.values()[ev_type];
         if (eventType == eME_VIDEO_NETWORK_STATE_EV) {
@@ -92,14 +101,14 @@ public class MainApplication extends Application implements ViGoManager.IViGoCal
 
     @Override
     public void sendCallback(int media_type, int data_type, byte[] message, int len) {
-        Log.d("udpPush", "sendCallback media_type = " + media_type);
-        Log.d("udpPush", "sendCallback data_type = " + data_type);
+        Log.d(TAG, "sendCallback media_type = " + media_type);
+        Log.d(TAG, "sendCallback data_type = " + data_type);
     }
 
     @Override
     public void traceCallback(String summary, String detail, int level) {
-        Log.d("udpPush", "sendCallback summary = " + summary);
-        Log.d("udpPush", "sendCallback detail = " + detail);
-        Log.d("udpPush", "sendCallback level = " + level);
+        Log.d(TAG, "sendCallback summary = " + summary);
+        Log.d(TAG, "sendCallback detail = " + detail);
+        Log.d(TAG, "sendCallback level = " + level);
     }
 }
