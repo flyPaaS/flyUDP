@@ -73,7 +73,8 @@ public class MediaCodecVideoEncoder {
 	    VIDEO_CODEC_Unknown
   }
 
-  private static final int DEQUEUE_TIMEOUT = 0;  // Non-blocking, no wait.
+  private static final int DEQUEUE_TIMEOUT = 500;  // Non-blocking, no wait.
+  private int query_dequeueInputBuffer_times = 0;  // query_dequeueInputBuffer_times.
   private Thread mediaCodecThread;
   private MediaCodec mediaCodec;
   private ByteBuffer[] outputBuffers;
@@ -82,13 +83,13 @@ public class MediaCodecVideoEncoder {
   private static final String H265_MIME_TYPE = "video/hevc";
   // List of supported HW VP8 codecs.
   private static final String[] supportedVp8HwCodecPrefixes =
-    {"OMX.qcom.", "OMX.Nvidia.", "OMX.Exynos." };
+    {"OMX.qcom.","OMX.hisi.", "OMX.Nvidia.", "OMX.Exynos." };
   // List of supported HW H.264 codecs.
   private static final String[] supportedH264HwCodecPrefixes =
-    {"OMX.qcom.", "OMX.IMG.", "OMX.ti.", "OMX.MTK."/*, "OMX.hantro."*/ };
+    {"OMX.qcom.","OMX.hisi.", "OMX.IMG.", "OMX.ti.", "OMX.MTK."/*, "OMX.hantro."*/ };
   
   private static final String[] supportedH265HwCodecPrefixes =
-	{"OMX.qcom.", "OMX.IMG.", "OMX.ti.", "OMX.MTK."/*, "OMX.hantro."*/ };
+	{"OMX.qcom.","OMX.hisi.", "OMX.IMG.", "OMX.ti.", "OMX.MTK."/*, "OMX.hantro."*/ };
   // Bitrate modes - should be in sync with OMX_VIDEO_CONTROLRATETYPE defined
   
   private static final String codec_disabled_name = "OMX.IMG.TOPAZ.VIDEO.Encoder";
@@ -139,9 +140,9 @@ public class MediaCodecVideoEncoder {
           br.close();
       } catch (Exception e) {
           e.printStackTrace();
-      } 
+      }
       result = result/1000;
-     
+
       Log.i(TAG, "cpu freq:  " + result);
       return result;
   }
@@ -176,7 +177,13 @@ public class MediaCodecVideoEncoder {
           return 1;
       }
   }
-  
+
+  /* get cpu frequnce, (khz) */
+  public static String getCandidateEncoderName() {
+    EncoderProperties encdoer = findHwEncoder(H264_MIME_TYPE, supportedH264HwCodecPrefixes);
+    return encdoer.codecName;
+  }
+
   @SuppressLint("NewApi")
 private static EncoderProperties findHwEncoder(
       String mime, String[] supportedHwCodecPrefixes) {
@@ -200,17 +207,17 @@ private static EncoderProperties findHwEncoder(
       }
       Log.i(TAG, "Found candidate encoder " + name);
       
-      if (name.equals(codec_disabled_name)) {	  
-          int Maxfeq = getCurCpuMaxFreq();  
-          int ncpu = getNumCores();  
+      /*if (name.equals(codec_disabled_name)) {
+          int Maxfeq = getCurCpuMaxFreq();
+          int ncpu = getNumCores();
           Log.i(TAG, "CurCpuMaxFreq: "+ Maxfeq +" NumCores: "+ncpu);
-          if(Maxfeq<=1305 && ncpu<=8)
-          {
-              Log.e(TAG, "findHwEncoder: " + name +" ,but disable this hw codec.");
-              return null;       	  
-          }
+        if(Maxfeq<=1305 && ncpu<=8)
+         {
+             Log.e(TAG, "findHwEncoder: " + name +" ,but disable this hw codec.");
+            return null;
+         }
 
-        }
+        }*/
       
       // Check if this is supported HW encoder.
       boolean supportedCodec = false;
@@ -310,7 +317,7 @@ private static EncoderProperties findHwEncoder(
       MediaFormat format = MediaFormat.createVideoFormat(mime, width, height);
       format.setInteger(MediaFormat.KEY_BIT_RATE, 1000 * kbps);
       format.setInteger(MediaFormat.KEY_PROFILE, 0x01);/**< Baseline profile */
-      format.setInteger(MediaFormat.KEY_LEVEL, 0x20);   //Level 2
+      format.setInteger(MediaFormat.KEY_LEVEL, 0x200);   //Level 3.1
       format.setInteger(MediaFormat.KEY_BITRATE_MODE, VIDEO_ControlRateConstant);
       format.setInteger(MediaFormat.KEY_COLOR_FORMAT, properties.colorFormat);
       format.setInteger(MediaFormat.KEY_FRAME_RATE, fps);
@@ -361,7 +368,7 @@ private static EncoderProperties findHwEncoder(
   }
 
   private void release() {
-    Log.d(TAG, "Java releaseEncoder");
+    Log.i(TAG, "Java releaseEncoder");
     checkOnMediaCodecThread();
     try {
       mediaCodec.stop();
@@ -394,7 +401,20 @@ private static EncoderProperties findHwEncoder(
   private int dequeueInputBuffer() {
     checkOnMediaCodecThread();
     try {
-      return mediaCodec.dequeueInputBuffer(DEQUEUE_TIMEOUT);
+      int result = mediaCodec.dequeueInputBuffer(DEQUEUE_TIMEOUT);
+      if((result== -1) && (query_dequeueInputBuffer_times <=10))
+      {
+        query_dequeueInputBuffer_times ++;
+        Log.i(TAG, "query_dequeueInputBuffer_times: " + query_dequeueInputBuffer_times + " result: " + result);
+        return dequeueInputBuffer();
+      }
+      else
+      {
+        query_dequeueInputBuffer_times = 0;
+        return result;
+      }
+
+      //return mediaCodec.dequeueInputBuffer(DEQUEUE_TIMEOUT);
     } catch (IllegalStateException e) {
       Log.e(TAG, "dequeueIntputBuffer failed", e);
       return -2;
@@ -456,7 +476,7 @@ private static EncoderProperties findHwEncoder(
           Log.d(TAG, "Sync frame generated");
         }
         if (isKeyFrame && (type == VideoCodecType.VIDEO_CODEC_H264||type == VideoCodecType.VIDEO_CODEC_H265)) {
-          Log.d(TAG, "Appending config frame of size " + configData.capacity() +
+          Log.i(TAG, "Appending config frame of size " + configData.capacity() +
               " to output buffer with offset " + info.offset + ", size " +
               info.size);
           // For H.264 key frame append SPS and PPS NALs at the start
@@ -469,16 +489,20 @@ private static EncoderProperties findHwEncoder(
           return new OutputBufferInfo(result, keyFrameBuffer,
               isKeyFrame, info.presentationTimeUs);
         } else {
+          Log.d(TAG, "outputBuffer.slice() generated");
           return new OutputBufferInfo(result, outputBuffer.slice(),
               isKeyFrame, info.presentationTimeUs);
         }
       } else if (result == MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED) {
+        Log.d(TAG, "MediaCodec.INFO_OUTPUT_BUFFERS_CHANGED");
         outputBuffers = mediaCodec.getOutputBuffers();
         return dequeueOutputBuffer();
       } else if (result == MediaCodec.INFO_OUTPUT_FORMAT_CHANGED) {
+        Log.d(TAG, "MediaCodec.INFO_OUTPUT_FORMAT_CHANGED");
         return dequeueOutputBuffer();
       } else if (result == MediaCodec.INFO_TRY_AGAIN_LATER) {
-        return null;
+        Log.d(TAG, "MediaCodec.INFO_TRY_AGAIN_LATER");
+        return dequeueOutputBuffer();
       }
       throw new RuntimeException("dequeueOutputBuffer: " + result);
     } catch (IllegalStateException e) {

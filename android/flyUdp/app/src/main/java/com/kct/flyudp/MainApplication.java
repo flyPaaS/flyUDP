@@ -69,6 +69,13 @@ public class MainApplication extends Application implements ViGoManager.IViGoCal
             UGoAPIParam.getInstance().stMediaCfg.vieNackEnabled = false;
             MainApplication.getInstance().mViGoManager.pub_ViGoSetConfig(UGoAPIParam.ME_CTRL_CFG_MODULE_ID, UGoAPIParam.getInstance().stMediaCfg, 0);
             // 设置视频编码
+            /*
+            String  findenCoderName = MediaCodecVideoEncoder.getCandidateEncoderName();
+            Log.i(TAG, "findencoder name = " + findenCoderName);
+            int Maxfeq = MediaCodecVideoEncoder.getCurCpuMaxFreq();
+            int ncpu = MediaCodecVideoEncoder.getNumCores();
+            Log.i(TAG, "CurCpuMaxFreq: "+ Maxfeq +" NumCores: "+ncpu);*/
+
             MainApplication.getInstance().mViGoManager.pub_ViGoGetConfig(UGoAPIParam.ME_VIDEO_ENC_CFG_MODULE_ID, UGoAPIParam.getInstance().stVideoEncCfg, 0);
             UGoAPIParam.getInstance().stVideoEncCfg.usWidth = 360;
             UGoAPIParam.getInstance().stVideoEncCfg.usHeight = 480;
@@ -84,8 +91,8 @@ public class MainApplication extends Application implements ViGoManager.IViGoCal
             UGoAPIParam.getInstance().stVideoDevicePara.usCameraIdx = -1;
             UGoAPIParam.getInstance().stVideoDevicePara.iRotateAngle = -1;
             UGoAPIParam.getInstance().stVideoDevicePara.ucMaxFps = 30;
-            UGoAPIParam.getInstance().stVideoDevicePara.usWidth = 480;
-            UGoAPIParam.getInstance().stVideoDevicePara.usHeight = 640;
+            UGoAPIParam.getInstance().stVideoDevicePara.usWidth = 1280;
+            UGoAPIParam.getInstance().stVideoDevicePara.usHeight = 720;
             MainApplication.getInstance().mViGoManager.pub_ViGoSetCameraParam(UGoAPIParam.getInstance().stVideoDevicePara);
         }
     }
