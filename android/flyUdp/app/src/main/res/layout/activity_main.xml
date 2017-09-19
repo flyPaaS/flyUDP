@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f5f5f5"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#c5c5c5"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/rtmp_push_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@drawable/push_cb"
+            android:text="@string/app_rtmp_tital_push"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/rtmp_pull_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@drawable/push_cb"
+            android:text="@string/app_rtmp_tital_pull"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/udp_push_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@drawable/push_cb"
+            android:text="@string/app_udp_tital_push"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/udp_pull_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@drawable/push_cb"
+            android:text="@string/app_udp_tital_pull"
+            android:textSize="12sp" />
+        
+        <TextView
+            android:id="@+id/view_edit"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/app_edit"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f5f5f5"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="10dp"
+                android:gravity="center|start"
+                android:text="@string/app_udp_ip"
+                android:textSize="16sp" />
+
+            <ListView
+                android:id="@+id/listServer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerHeight="1dp"
+                android:fadingEdge="none"
+                android:footerDividersEnabled="true"
+                android:listSelector="@drawable/push_selector"
+                android:scrollbars="vertical"
+                android:transcriptMode="normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="101dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center|end"
+                    android:text="@string/app_udp_port"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/udp_push_port"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:hint="@string/app_udp_port_hint"
+                    android:inputType="text"
+                    android:text="@string/app_udp_port_nor"
+                    android:textColor="#7f7f7f"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#cdcdcd" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:gravity="center|end"
+                    android:text="@string/app_udp_stream"
+                    android:textSize="16sp" />
+
+                <EditText
+                    android:id="@+id/udp_push_stream"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="10dp"
+                    android:background="@null"
+                    android:numeric="integer"
+                    android:gravity="center"
+                    android:hint="@string/app_udp_stream_hint"
+                    android:text="@string/app_udp_stream_nor"
+                    android:textColor="#7f7f7f"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="15dp"
+                android:gravity="center|start"
+                android:text="@string/app_udp_can"
+                android:textSize="16sp" />
+
+            <RadioGroup
+                android:id="@+id/rg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:gravity="center|start"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/rb1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/app_udp_can_1" />
+
+                <RadioButton
+                    android:id="@+id/rb2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_udp_can_2" />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/push_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/push_btn"
+                android:clickable="false"
+                android:gravity="center"
+                android:text="@string/app_udp_push"
+                android:textColor="#ffffff"
+                android:textSize="20sp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center_horizontal" >
+
+            <TextView
+                android:id="@+id/ver_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:gravity="center"
+                android:text="@string/app_udp_ver"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

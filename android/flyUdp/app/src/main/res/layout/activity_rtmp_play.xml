@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity" >
+    
+    <RelativeLayout
+        android:id="@+id/playtitleview"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" >
+
+        <RelativeLayout
+            android:id="@+id/rl_back"
+            android:layout_width="50dip"
+            android:layout_height="50dip" >
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@mipmap/common_list_back"
+                android:clickable="false"
+                android:contentDescription="@string/app_name"
+                android:focusable="false" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/rl_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toEndOf="@id/rl_back"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="@string/app_udp_tital_push"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    
+    <cn.nodemedia.NodePlayerView
+        android:id="@+id/live_player_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/playtitleview" >
+    </cn.nodemedia.NodePlayerView>
+</RelativeLayout>
