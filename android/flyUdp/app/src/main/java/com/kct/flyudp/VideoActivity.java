@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.os.SystemClock;
 import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.view.SurfaceView;
@@ -26,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.webrtc.videoengine.ViERenderer;
 import org.webrtc.videoengine.VideoCaptureAndroid;
+
+import java.util.ArrayList;
 
 /**
  * Created by zhouwq on 2017/6/12/012.
@@ -49,6 +52,10 @@ public class VideoActivity extends Activity implements View.OnClickListener {
 
     // 屏幕锁
     private PowerManager.WakeLock mWakeLock = null;
+
+    // 用于打开网络信息的连击动作时间列表
+    private boolean bShowNetMsg = true;
+    ArrayList<Long> clickList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,23 +82,46 @@ public class VideoActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        int nMode = getIntent().getIntExtra("mode", 0);
+        //int nMode = getIntent().getIntExtra("mode", 0);
+        String strName = getIntent().getStringExtra("name");
         String stream = getIntent().getStringExtra("stream");
         TextView title = (TextView)findViewById(R.id.rl_text);
-        if (nMode == 2) {
-            String str = "UdpPush(" + stream + ")";
-            title.setText(str);
-        }
-        else {
-            String str = "UdpPull(" + stream + ")";
-            title.setText(str);
-        }
+        String str = strName + "(" + stream + ")";
+        title.setText(str);
         // 关闭扬声器
         SetSpeaker(false);
         // 注册广播
         IntentFilter mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(UIData.ACTION_NETWORK_STATE);
         registerReceiver(mBroadcastReceiver, mIntentFilter);
+        // 处理Tip显示隐藏
+        mLocalWnd.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (bShowNetMsg) {
+                    // 当前为打开状态则单击关闭
+                    bShowNetMsg = false;
+                    mTextTips.setText("");
+                    mTextTips.setVisibility(View.GONE);
+                    return;
+                }
+                clickList.add(SystemClock.uptimeMillis());
+                if (clickList.size() == 3) {
+                    //3次连击打开
+                    if (clickList.get(clickList.size() - 1) - clickList.get(0) < 2000) {
+                        clickList.clear();
+                        bShowNetMsg = true;
+                        mTextTips.setText("");
+                        mTextTips.setVisibility(View.VISIBLE);
+                    } else {
+                        Long tmp = clickList.get(clickList.size() - 1);
+                        clickList.clear();
+                        clickList.add(tmp);
+                    }
+                }
+            }
+        });
     }
 
     @SuppressWarnings("deprecation")

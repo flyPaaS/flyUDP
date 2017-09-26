@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">flyUdp</string>
-    <string name="app_udp_ver">flyUdp Soft Version: V1.0.1</string>
+    <string name="app_udp_ver">flyUdp Soft Version: V1.0.2</string>
     <string name="app_udp_ip">请选择服务器地址</string>
     <string name="app_udp_port">服务器端口:</string>
     <string name="app_udp_port_hint">请输入服务器的端口</string>
@@ -9,8 +9,8 @@
     <string name="app_udp_stream_nor">123456</string>
     <string name="app_udp_stream_hint">请输入会话ID</string>
     <string name="app_udp_can">请选择是否使用flyCan</string>
-    <string name="app_udp_can_1">直接转发</string>
-    <string name="app_udp_can_2">使用flyCan转发</string>
+    <string name="app_udp_can_1">公网</string>
+    <string name="app_udp_can_2">flyCan通信加速</string>
     <string name="app_udp_push">Push</string>
     <string name="app_udp_pull">Pull</string>
     <string name="app_udp_tital_push">UdpPush</string>
@@ -39,4 +39,8 @@
     <string name="app_edit_server">服务器地址不能为空</string>
     <string name="app_login_progress">服务器请求中，请等待。。。</string>
     <string name="app_loginout_progress">资源释放中，请等待。。。</string>
+    <string name="app_udp_pull_can">该streamId被占用</string>
+    <string name="app_udp_edit">刷新会话列表</string>
+    <string name="app_udp_top_view1">选择会话中转服务器</string>
+    <string name="app_udp_top_view2">选择会话</string>
 </resources>

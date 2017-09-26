@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -46,13 +47,21 @@ public class MainActivity extends Activity {
     public ListView mListSerIP = null;
     public ServerAdapter mServerAdapter = null;
     public int nSelectServer = 0;
+
     // RTMP服务器数据
     public ArrayList<String> mRtmpServerIp = new ArrayList<>();
     public ArrayList<String> mRtmpServerList = new ArrayList<>();
-    // UDP服务器数据
+
+    // UDP推流端数据
     public ArrayList<String> mUDPServerIp = new ArrayList<>();
+    public ArrayList<String> mUDPServerName = new ArrayList<>();
     public ArrayList<String> mUDPServerList = new ArrayList<>();
     public ArrayList<Integer> mUDPServerDelay = new ArrayList<>();
+    // UDP拉流端列表
+    public ArrayList<String> mUDPPull = new ArrayList<>();
+    public ArrayList<String> mUDPPullName = new ArrayList<>();
+    public ArrayList<String> mUDPPullServer = new ArrayList<>();
+    public ArrayList<String> mUDPPullServerList = new ArrayList<>();
 
     // 服务器端口
     public EditText mEditSerPort = null;
@@ -75,6 +84,11 @@ public class MainActivity extends Activity {
     // 推拉流按键
     public TextView mTextView = null;
 
+    // 服务器端口和流ID控件
+    public TextView mTextViewTop = null;
+    public LinearLayout mLinearLayoutCenter = null;
+    public TextView mTextViewCenter = null;
+
     // 进度
     private ProgressDialog mProgressDialog = null;
 
@@ -86,6 +100,29 @@ public class MainActivity extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         MainApplication.getInstance().mMainActivity = this;
+        //
+        mTextViewTop = (TextView) findViewById(R.id.viewtop);
+        mLinearLayoutCenter = (LinearLayout) findViewById(R.id.center);
+        mTextViewCenter = (TextView) findViewById(R.id.viewcenter);
+        mTextViewCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 刷新拉流列表
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mUDPPull.clear();
+                        mUDPPullName.clear();
+                        mUDPPullServer.clear();
+                        mUDPPullServerList.clear();
+                        for (int i = 0; i < mUDPServerIp.size(); i++) {
+                            UpdatePullServer(mUDPServerIp.get(i), mUDPServerList.get(i), mUDPServerName.get(i));
+                        }
+                    }
+                }).start();
+            }
+        });
+
         // 业务类型选择
         nSelectType = 0;
         rtmp_pushSelect = (CheckBox) findViewById(R.id.rtmp_push_select);
@@ -138,6 +175,10 @@ public class MainActivity extends Activity {
                 rtmp_pullSelect.setChecked(false);
                 udp_pushSelect.setChecked(false);
                 udp_pullSelect.setChecked(false);
+                // 更新控件显示
+                mTextViewTop.setText(R.string.app_udp_ip);
+                mLinearLayoutCenter.setVisibility(View.VISIBLE);
+                mTextViewCenter.setVisibility(View.GONE);
             }
         });
         rtmp_pullSelect.setOnClickListener(new View.OnClickListener() {
@@ -160,6 +201,10 @@ public class MainActivity extends Activity {
                 rtmp_pullSelect.setChecked(true);
                 udp_pushSelect.setChecked(false);
                 udp_pullSelect.setChecked(false);
+                // 更新控件显示
+                mTextViewTop.setText(R.string.app_udp_ip);
+                mLinearLayoutCenter.setVisibility(View.VISIBLE);
+                mTextViewCenter.setVisibility(View.GONE);
             }
         });
 
@@ -183,6 +228,10 @@ public class MainActivity extends Activity {
                 rtmp_pullSelect.setChecked(false);
                 udp_pushSelect.setChecked(true);
                 udp_pullSelect.setChecked(false);
+                // 更新控件显示
+                mTextViewTop.setText(R.string.app_udp_top_view1);
+                mLinearLayoutCenter.setVisibility(View.GONE);
+                mTextViewCenter.setVisibility(View.GONE);
             }
         });
         udp_pullSelect.setOnClickListener(new View.OnClickListener() {
@@ -205,6 +254,24 @@ public class MainActivity extends Activity {
                 rtmp_pullSelect.setChecked(false);
                 udp_pushSelect.setChecked(false);
                 udp_pullSelect.setChecked(true);
+                // 更新控件显示
+                mTextViewTop.setText(R.string.app_udp_top_view2);
+                mLinearLayoutCenter.setVisibility(View.GONE);
+                mTextViewCenter.setVisibility(View.VISIBLE);
+
+                // 刷新拉流列表
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mUDPPull.clear();
+                        mUDPPullName.clear();
+                        mUDPPullServer.clear();
+                        mUDPPullServerList.clear();
+                        for (int i = 0; i < mUDPServerIp.size(); i++) {
+                            UpdatePullServer(mUDPServerIp.get(i), mUDPServerList.get(i), mUDPServerName.get(i));
+                        }
+                    }
+                }).start();
             }
         });
 
@@ -362,28 +429,28 @@ public class MainActivity extends Activity {
                 }
                 if (nSelectType == 2 || nSelectType == 3) {
                     // UDP
-                    if (mUDPServerList.size() <= 0) {
-                        Toast.makeText(MainActivity.this, getString(R.string.str_udp_ip), Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    if (mEditSerPort.getText().toString().isEmpty()) {
-                        Toast.makeText(MainActivity.this, getString(R.string.str_udp_port), Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    if (mEditSerStream.getText().toString().isEmpty()) {
-                        Toast.makeText(MainActivity.this, getString(R.string.str_udp_stream), Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                    // 加入进度条
-                    if (mProgressDialog == null) {
-                        mProgressDialog = new ProgressDialog(MainActivity.this);
-                    }
-                    mProgressDialog.setIndeterminate(true);
-                    mProgressDialog.setCancelable(true);
-                    mProgressDialog.setMessage(getString(R.string.app_login_progress));
-                    mProgressDialog.show();
-                    //
                     if (nSelectType == 2) {
+                        // UDP
+                        if (mUDPServerList.size() <= 0) {
+                            Toast.makeText(MainActivity.this, getString(R.string.str_udp_ip), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (mEditSerPort.getText().toString().isEmpty()) {
+                            Toast.makeText(MainActivity.this, getString(R.string.str_udp_port), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        if (mEditSerStream.getText().toString().isEmpty()) {
+                            Toast.makeText(MainActivity.this, getString(R.string.str_udp_stream), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        // 加入进度条
+                        if (mProgressDialog == null) {
+                            mProgressDialog = new ProgressDialog(MainActivity.this);
+                        }
+                        mProgressDialog.setIndeterminate(true);
+                        mProgressDialog.setCancelable(true);
+                        mProgressDialog.setMessage(getString(R.string.app_login_progress));
+                        mProgressDialog.show();
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -423,23 +490,44 @@ public class MainActivity extends Activity {
                             }
                         }).start();
                     } else {
+                        if (mUDPPullServer.size() <= 0) {
+                            Toast.makeText(MainActivity.this, getString(R.string.str_udp_ip), Toast.LENGTH_LONG).show();
+                            return;
+                        }
+                        // 加入进度条
+                        if (mProgressDialog == null) {
+                            mProgressDialog = new ProgressDialog(MainActivity.this);
+                        }
+                        mProgressDialog.setIndeterminate(true);
+                        mProgressDialog.setCancelable(true);
+                        mProgressDialog.setMessage(getString(R.string.app_login_progress));
+                        mProgressDialog.show();
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 //
                                 boolean bCan = (nSelectCan != 0);
-                                strStreamUdpPullId = mEditSerStream.getText().toString();
+                                //strStreamUdpPullId = mEditSerStream.getText().toString();
+                                strStreamUdpPullId = mUDPPullServer.get(nSelectServer);
                                 // add zwq
                                 //long lDeday = mUDPServerDelay.get(nSelectServer).longValue();
                                 //if (lDeday < 150) {
                                 //	//bCan = false;
                                 //}
                                 // add end
-                                String strResult = HttpClient.PullRequest(mUDPServerIp.get(nSelectServer), mEditSerPort.getText().toString(), strStreamUdpPullId, bCan);
+                                String strResult = HttpClient.PullRequest(mUDPPull.get(nSelectServer), mEditSerPort.getText().toString(), strStreamUdpPullId, bCan);
                                 if (strResult != null && !strResult.equals("")) {
                                     Log.e(TAG, "PullRequest resp = " + strResult);
                                     try {
                                         JSONObject jsonRoot = new JSONObject(strResult);
+                                        if (jsonRoot.has("result")) {
+                                            String str = jsonRoot.getString("result");
+                                            if (str.equals("000002")) {
+                                                // 被占用
+                                                mHandler.sendEmptyMessage(1101);
+                                                return;
+                                            }
+                                        }
                                         if (jsonRoot.has("apinfo")) {
                                             JSONObject jsonChild = jsonRoot.getJSONObject("apinfo");
                                             if (jsonChild.has("ip")) {
@@ -526,12 +614,14 @@ public class MainActivity extends Activity {
                 if (nSelectType == 2) {
                     Intent mIntent = new Intent(MainActivity.this, VideoActivity.class);
                     mIntent.putExtra("mode", nSelectType);
+                    mIntent.putExtra("name", mUDPServerName.get(nSelectServer));
                     mIntent.putExtra("stream", strStreamUdpPushId);
                     startActivity(mIntent);
                 }
                 if (nSelectType == 3) {
                     Intent mIntent = new Intent(MainActivity.this, VideoActivity.class);
                     mIntent.putExtra("mode", nSelectType);
+                    mIntent.putExtra("name", mUDPPullName.get(nSelectServer));
                     mIntent.putExtra("stream", strStreamUdpPullId);
                     startActivity(mIntent);
                 }
@@ -632,7 +722,7 @@ public class MainActivity extends Activity {
                             @Override
                             public void run() {
                                 boolean bCan = (nSelectCan != 0);
-                                String strResult = HttpClient.PullRelease(mUDPServerIp.get(nSelectServer), mEditSerPort.getText().toString(), strStreamUdpPullId, bCan);
+                                String strResult = HttpClient.PullRelease(mUDPPull.get(nSelectServer), mEditSerPort.getText().toString(), strStreamUdpPullId, bCan);
                                 if (strResult != null && !strResult.equals("")) {
                                     Log.e(TAG, "PullRelease resp = " + strResult);
                                 }
@@ -657,6 +747,17 @@ public class MainActivity extends Activity {
             if (msg.what == 1100) {
                 // PING
                 GetUdpPing();
+            }
+            if (msg.what == 1101) {
+                if (mProgressDialog != null) {
+                    mProgressDialog.dismiss();
+                    mProgressDialog = null;
+                }
+                Toast.makeText(MainActivity.this, getString(R.string.app_udp_pull_can), Toast.LENGTH_SHORT).show();
+            }
+            if (msg.what == 2000) {
+                // 更新服务器列表
+                UpdateServer();
             }
             super.handleMessage(msg);
         }
@@ -727,6 +828,7 @@ public class MainActivity extends Activity {
                                 // 数据
                                 if (jsonRoot.has("ss")) {
                                     mUDPServerIp.clear();
+                                    mUDPServerName.clear();
                                     mUDPServerList.clear();
                                     JSONArray array = jsonRoot.getJSONArray("ss");
                                     for (int i = 0; i < array.length(); i++) {
@@ -736,6 +838,7 @@ public class MainActivity extends Activity {
                                             String strName = obj.getString("ssname");
                                             String strText = strIp + " (" + strName + ")";
                                             mUDPServerIp.add(strIp);
+                                            mUDPServerName.add(strName);
                                             mUDPServerList.add(strText);
                                         }
                                     }
@@ -772,11 +875,24 @@ public class MainActivity extends Activity {
                 mServerAdapter.clients.add(st);
             }
         }
-        if (nSelectType == 2 || nSelectType == 3) {
+        if (nSelectType == 2) {
             mServerAdapter.clients.clear();
             for (int i = 0; i < mUDPServerList.size(); i++) {
                 ServerClient st = new ServerClient();
                 st.setServer(mUDPServerList.get(i));
+                if (nSelectServer == i) {
+                    st.setIscheck(true);
+                } else {
+                    st.setIscheck(false);
+                }
+                mServerAdapter.clients.add(st);
+            }
+        }
+        if (nSelectType == 3) {
+            mServerAdapter.clients.clear();
+            for (int i = 0; i < mUDPPullServerList.size(); i++) {
+                ServerClient st = new ServerClient();
+                st.setServer(mUDPPullServerList.get(i));
                 if (nSelectServer == i) {
                     st.setIscheck(true);
                 } else {
@@ -868,6 +984,38 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         }
         return -2;
+    }
+
+    public void UpdatePullServer(final String strIp, final String strShow, final String strName) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String strResult = HttpClient.GetPullServer(strIp, 8095);
+                if (strResult != null && !strResult.equals("")) {
+                    Log.e(TAG, "UpdatePullServer " + strIp + " resp = " + strResult);
+                    try {
+                        JSONObject jsonRoot = new JSONObject(strResult);
+                        if (jsonRoot.has("cnt")) {
+                            int nCnt = jsonRoot.getInt("cnt");
+                            if (nCnt > 0) {
+                                JSONArray jsonChild = jsonRoot.getJSONArray("list");
+                                for (int j = 0; j < nCnt; j++) {
+                                    mUDPPull.add(strIp);
+                                    mUDPPullName.add(strName);
+                                    String strStreamId = jsonChild.getString(j);
+                                    mUDPPullServer.add(strStreamId);
+                                    String strStreamShow = strShow + "  (" + strStreamId + ")";
+                                    mUDPPullServerList.add(strStreamShow);
+                                }
+                                mHandler.sendEmptyMessage(2000);
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 
     // ListItem数据类

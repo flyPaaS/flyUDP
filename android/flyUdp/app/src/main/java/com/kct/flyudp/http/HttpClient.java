@@ -300,6 +300,25 @@ public class HttpClient {
         return null;
     }
 
+    // 获取可用的UDP拉流服务器和流ID
+    public static String GetPullServer(String strIp, int nPort) {
+        String strUrl = "http://" + strIp + ":" + String.valueOf(nPort) + "/udprelay/v1/getStreamList?";
+        HttpGet mHttpGet = new HttpGet(strUrl);
+        mHttpGet.setHeader("Accept", "application/json");
+        mHttpGet.setHeader("Content-Type", "application/json;charset=utf-8");
+        DefaultHttpClient mDefaultHttpClient = new DefaultHttpClient();
+        try {
+            HttpResponse mHttpResponse = mDefaultHttpClient.execute(mHttpGet);
+            HttpEntity mHttpEntity = mHttpResponse.getEntity();
+            if (mHttpEntity != null) {
+                return EntityUtils.toString(mHttpEntity, "UTF-8");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     // 获取MD5加密后的数据
     private static String getSignature(String accountSid, String authToken, String timestamp, EncryptUtil encryptUtil) throws Exception {
         String sig = accountSid + authToken + timestamp;

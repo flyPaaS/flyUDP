@@ -60,7 +60,7 @@ public class MainApplication extends Application implements ViGoManager.IViGoCal
             UGoAPIParam.getInstance().stMediaCfg.ucRealTimeType = 0;
             UGoAPIParam.getInstance().stMediaCfg.ucVideoEnable = 1;
             UGoAPIParam.getInstance().stMediaCfg.ucEmodelEnable = 0;
-            UGoAPIParam.getInstance().stMediaCfg.ucFecEnable = 1;
+            UGoAPIParam.getInstance().stMediaCfg.ucFecEnable = 0;
             UGoAPIParam.getInstance().stMediaCfg.ucRtpEncEnable = 0;
             UGoAPIParam.getInstance().stMediaCfg.ucExtMediaProcEn = 0;
             UGoAPIParam.getInstance().stMediaCfg.ucExtAudioTransEnable = 0;
@@ -69,13 +69,6 @@ public class MainApplication extends Application implements ViGoManager.IViGoCal
             UGoAPIParam.getInstance().stMediaCfg.vieNackEnabled = false;
             MainApplication.getInstance().mViGoManager.pub_ViGoSetConfig(UGoAPIParam.ME_CTRL_CFG_MODULE_ID, UGoAPIParam.getInstance().stMediaCfg, 0);
             // 设置视频编码
-            /*
-            String  findenCoderName = MediaCodecVideoEncoder.getCandidateEncoderName();
-            Log.i(TAG, "findencoder name = " + findenCoderName);
-            int Maxfeq = MediaCodecVideoEncoder.getCurCpuMaxFreq();
-            int ncpu = MediaCodecVideoEncoder.getNumCores();
-            Log.i(TAG, "CurCpuMaxFreq: "+ Maxfeq +" NumCores: "+ncpu);*/
-
             MainApplication.getInstance().mViGoManager.pub_ViGoGetConfig(UGoAPIParam.ME_VIDEO_ENC_CFG_MODULE_ID, UGoAPIParam.getInstance().stVideoEncCfg, 0);
             UGoAPIParam.getInstance().stVideoEncCfg.usWidth = 360;
             UGoAPIParam.getInstance().stVideoEncCfg.usHeight = 480;
