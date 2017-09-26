@@ -26,11 +26,13 @@
 
 //Models
 #import "AddressListItem.h"
+#import "SessionItem.h"
 
 //customView
 #import "LabelAndTextCell.h"
 #import "SegmentCell.h"
 #import "RadioCell.h"
+#import "RefreshTableViewCell.h"
 
 //viewContrller
 #import "PullViewController.h"

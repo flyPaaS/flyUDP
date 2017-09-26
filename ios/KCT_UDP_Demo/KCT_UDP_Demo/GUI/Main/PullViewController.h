@@ -20,6 +20,7 @@ typedef void(^stopPullStreamBlock)(void);
 
 @property (nonatomic,strong) NSDictionary *apinfoDict;
 @property (nonatomic,strong) NSString *sessionId;
+@property (nonatomic,strong) NSString *ssname;
 @property (nonatomic,copy) stopPullStreamBlock block;
 
 @end

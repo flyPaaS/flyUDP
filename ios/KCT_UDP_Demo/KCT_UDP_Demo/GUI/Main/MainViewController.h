@@ -9,9 +9,6 @@
 
 
 typedef enum{
-    //pushListTypeServerIP,
-    pushListTypeServerPort,
-    pushListTypeSession,
     pushListTypeSegment,
     pushListTypeCounts,
 }pushListType;

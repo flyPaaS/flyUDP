@@ -17,16 +17,18 @@
 
 @property (strong, nonatomic) NSString *srsIpAdress;
 @property (strong, nonatomic) NSString *sessionId;
+@property (strong, nonatomic) NSMutableArray *ipArrays;
+@property (strong, nonatomic) NSMutableArray *sessionArrays;
+@property (strong,nonatomic) NSMutableArray *tempArrays;
+
 @property (weak, nonatomic) IBOutlet UIButton *pullBtn;
 @property (weak, nonatomic) IBOutlet UITableView *serIpTableView;
 @property (weak, nonatomic) IBOutlet UITableView *serInfoTableView;
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
-@property(nonatomic,strong)UISegmentedControl *streamSegmentedControl;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelTopConstraint;
-@property (strong, nonatomic) UITextField *portField;
-@property (strong, nonatomic) UITextField *sessionIdField;
-@property (strong, nonatomic) NSMutableArray *ipArrays;
-@property (strong,nonatomic) NSMutableArray *tempArrays;
+@property(nonatomic,strong) UISegmentedControl *streamSegmentedControl;
+@property (strong, nonatomic) UIBarButtonItem *rightButtonItem;
+@property (strong, nonatomic) IBOutlet UILabel *topLabel;
+@property (strong, nonatomic) IBOutlet UIButton *refreshBtn;
 
 @end
 
@@ -44,14 +46,13 @@
     if (_streamIndex == 0) {
         [self updateSession];
     }
-    
 }
-
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     _tempArrays = [NSMutableArray new];
+    _sessionArrays = [NSMutableArray new];
     self.title = nil;
     
     _segmentSelectIndex = 0;
@@ -67,13 +68,10 @@
     [_streamSegmentedControl addTarget:self action:@selector(segmentedChanged:) forControlEvents:UIControlEventValueChanged];
     self.streamSegmentedControl.selectedSegmentIndex = 0;
     
+    self.refreshBtn.hidden = YES;
+    self.serInfoTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.versionLabel.text = [self getVersionNum];
     
-    UIBarButtonItem *buttonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(configSetting)];
-    self.navigationItem.rightBarButtonItem = buttonItem;
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(enterForeground)
@@ -97,14 +95,21 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark----TableView
+#pragma mark-
+#pragma mark--------TableView-----------
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (tableView == self.serIpTableView) {
+        if (_streamIndex == 1) {
+            return self.sessionArrays.count;
+        }
         return self.ipArrays.count;
     } else {
+        if (_streamIndex == 1) {
+            return 2;
+        }
         return pushListTypeCounts;
     }
     return pushListTypeCounts;
@@ -116,8 +121,8 @@
     if (tableView == self.serIpTableView) {
         return 44;
     } else {
-        if (row == pushListTypeSegment) {
-            return 80;
+        if (_streamIndex == 1 && row == 0) {
+            return 60;
         }
         return 44;
     }
@@ -129,64 +134,51 @@
     NSInteger row = indexPath.row;
     
     if (tableView == self.serInfoTableView) {
-        UITableViewCell *resultCell = nil;
-        LabelAndTextCell *cell = nil;
-        SegmentCell *cell2 = nil;
-        
-        if (row < pushListTypeSegment) {
-            cell = [tableView dequeueReusableCellWithIdentifier:@"LabelAndTextCell"];
+        if (_streamIndex == 0) {
+            UITableViewCell *resultCell = nil;
+            SegmentCell *cell2 = nil;
+            cell2 = [tableView dequeueReusableCellWithIdentifier:@"segmetCell"];
+            [cell2.segmentedContrl addTarget:self action:@selector(segmentedChanged:) forControlEvents:UIControlEventValueChanged];
+            resultCell = cell2;
+            resultCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return resultCell;
+        } else {
+            UITableViewCell *resultCell = nil;
             switch (row) {
-                    /*
-                case pushListTypeServerIP:
+                case 0:
                 {
-                    cell.label.text = @"服务器IP:";
-                    cell.field.tag = 100;
-                    cell.field.text = @"183.60.189.169";
-                }
-                    break;*/
-                case pushListTypeServerPort:
-                {
-                    cell.label.text = @"服务器端口:";
-                    cell.field.text = @"8095";
-                    self.portField = cell.field;
+                    RefreshTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RefreshTableViewCell"];
+                    [cell.button addTarget:self action:@selector(refreshSessionList) forControlEvents:UIControlEventTouchUpInside];
+                    resultCell = cell;
                 }
                     break;
-                case pushListTypeSession:
+                case 1:
                 {
-                    cell.label.text = @"分配的会话ID:";
-                    cell.field.text = self.sessionId;
-                    if (_streamIndex == 0) {
-                        cell.field.enabled = NO;
-                    } else {
-                        cell.field.enabled = YES;
-                        cell.field.placeholder = @"输入sessionId";
-                    }
-                    
-                    self.sessionIdField = cell.field;
+                    SegmentCell *cell2 = nil;
+                    cell2 = [tableView dequeueReusableCellWithIdentifier:@"segmetCell"];
+                    [cell2.segmentedContrl addTarget:self action:@selector(segmentedChanged:) forControlEvents:UIControlEventValueChanged];
+                    resultCell = cell2;
                 }
                     break;
                 default:
                     break;
             }
-            resultCell = cell;
-            cell.field.delegate = self;
-            
-        } else {
-            cell2 = [tableView dequeueReusableCellWithIdentifier:@"segmetCell"];
-            [cell2.segmentedContrl addTarget:self action:@selector(segmentedChanged:) forControlEvents:UIControlEventValueChanged];
-            resultCell = cell2;
+            resultCell.selectionStyle = UITableViewCellSelectionStyleNone;
+            return resultCell;
         }
-        resultCell.selectionStyle = UITableViewCellSelectionStyleNone;
-        return resultCell;
     } else {
         RadioCell *cell = [tableView dequeueReusableCellWithIdentifier:@"RadioCell"];
-        AddressListItem *item = [self.ipArrays objectAtIndex:row];
-        //NSDictionary *dic =[self.ipArrays objectAtIndex:row];
-        NSString *title = item.ssip;
-        NSString *ssname = item.ssname;
-        double rtt = item.rtt;
-        cell.label.text = [NSString stringWithFormat:@"%@(%@)",title,ssname];
-        //cell.label.text = [NSString stringWithFormat:@"%@(%f)",title,rtt];
+        if (_streamIndex == 0) {
+            AddressListItem *item = [self.ipArrays objectAtIndex:row];
+            NSString *title = item.ssip;
+            NSString *ssname = item.ssname;
+            //double rtt = item.rtt;
+            cell.label.text = [NSString stringWithFormat:@"%@(%@)",title,ssname];
+        } else {
+            SessionItem *item = [self.sessionArrays objectAtIndex:row];
+            cell.label.text = [NSString stringWithFormat:@"%@(%@)",item.ssname,item.sessionId];
+        }
+        
         if (row == _ipSelectIndex) {
             [cell.button setImage:[UIImage imageNamed:@"checkBtn.png"] forState:UIControlStateNormal];
         } else {
@@ -206,7 +198,9 @@
         NSInteger row = indexPath.row;
         [self changeCellState:row];
         _ipSelectIndex = row;
-        [self pingAddressItem:row];
+        if (_streamIndex == 0) {
+            [self pingAddressItem:row];
+        }
     }
 }
 
@@ -218,21 +212,26 @@
     return YES;
 }
 
-
-#pragma mark--Button
+#pragma mark-
+#pragma mark----------Button Event-------------
 
 - (void)segmentedChanged:(id)sender {
     UISegmentedControl *segment = (UISegmentedControl *)sender;
     if (segment == self.streamSegmentedControl) {
+        _ipSelectIndex = -1;
         _streamIndex = segment.selectedSegmentIndex;
         [self.serInfoTableView reloadData];
+        [self.serIpTableView reloadData];
         if (_streamIndex == 0) {
             [self updateSession];
             [self.pullBtn setTitle:@"Push" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = nil;
+            self.topLabel.text = @"选择会话中转服务器";
         } else {
             self.sessionId = nil;
-            self.sessionIdField.text = @"";
             [self.pullBtn setTitle:@"Pull" forState:UIControlStateNormal];
+            self.navigationItem.rightBarButtonItem = self.rightButtonItem;
+            self.topLabel.text = @"选择会话";
         }
         
     } else {
@@ -245,25 +244,20 @@
     NSInteger tag = btn.tag;
     _ipSelectIndex = tag;
     [self changeCellState:tag];
-    [self pingAddressItem:tag];
+    if (_streamIndex == 0) {
+        [self pingAddressItem:tag];
+    }
 }
 
 - (IBAction)pushClick:(id)sender
 {
+    if (_ipSelectIndex == -1) {
+        return;
+    }
+    
     if (_streamIndex == 0) {
         [self streamPush];
     } else {
-        if (self.sessionIdField.text == nil || [self.sessionIdField.text isEqualToString:@""]) {
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"sessionId不能为空" message:@"请输入sessionId" preferredStyle:UIAlertControllerStyleAlert];
-            [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
-            [self presentViewController:alert animated:YES completion:nil];
-            return;
-        }
-//        if ([self.sessionId isEqualToString:self.sessionIdField.text]) {
-//            [MBProgressHUD showSuccess:@"请确保跟push的sessionid一致"];
-//            return;
-//        }
-        self.sessionId = self.sessionIdField.text;
         [self streamPull];
     }
     
@@ -274,6 +268,12 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)refreshSessionList
+{
+    [self getStreamList:self.ipArrays needReload:YES];
+}
+
+//这个方式暂时没使用
 - (void)configSetting
 {
     UIStoryboard *board = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -284,7 +284,8 @@
     [self.navigationController pushViewController:configVC animated:YES];
 }
 
-#pragma mark---private
+#pragma mark-
+#pragma mark---------private----------
 
 - (NSString *)getVersionNum {
     NSString *result;
@@ -300,12 +301,16 @@
         [MBProgressHUD showSuccess:@"sessionId已更新"];
     }
     self.sessionId = [self createSessionId];
-    self.sessionIdField.text = self.sessionId;
 }
 
 - (void)changeCellState:(NSInteger)index
 {
-    for (int i = 0; i < [self.ipArrays count]; i++) {
+    NSInteger count = 0;
+    count = [self.ipArrays count];
+    if (_streamIndex == 1) {
+        count = [self.sessionArrays count];
+    }
+    for (int i = 0; i < count; i++) {
         NSIndexPath *path = [NSIndexPath indexPathForRow:i inSection:0];
         RadioCell *cell = [self.serIpTableView cellForRowAtIndexPath:path];
         [cell.button setImage:[UIImage imageNamed:@"unCheckBtn.png"] forState:UIControlStateNormal];
@@ -337,7 +342,7 @@
         [MBProgressHUD hideHUDForView:self.view];
         if (data) {
             NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            NSLog(@"--srs  %@",dict);
+            NSLog(@"--getSerIps rsp:  %@",dict);
             NSNumber *result = [dict objectForKey:@"result"];
             if ([result intValue] == 200) {
                 NSArray *ips = [dict objectForKey:@"ss"];
@@ -345,6 +350,7 @@
                 self.ipArrays = [self createAddressItem:ips];
                 //[self pingAddressItem:0];
                 [self pingArray:self.ipArrays];
+                [self getStreamList:self.ipArrays needReload:NO];
                 _ipSelectIndex = 0;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [MBProgressHUD showSuccess:@"获取成功"];
@@ -358,8 +364,6 @@
             [MBProgressHUD showError:@"获取失败"];
         }
     }];
-    
-    
 }
 
 - (NSMutableArray *)createAddressItem:(NSArray *)arrays {
@@ -423,21 +427,67 @@
     
 }
 
+- (void)getStreamList:(NSMutableArray *)serverIpArray needReload:(BOOL)needReload
+{
+    if (needReload) {
+        [MBProgressHUD showMessage:@"正在刷新会话列表" toView:self.view];
+    }
+    [self.sessionArrays removeAllObjects];
+    
+    NSInteger count = serverIpArray.count;
+    __block NSInteger kT = 0;
+    for (int i = 0; i< serverIpArray.count; i++) {
+        AddressListItem *ipItem = [serverIpArray objectAtIndex:i];
+        NSString *url = [NSString stringWithFormat:@"http://%@:8095/udprelay/v1/getStreamList",ipItem.ssip];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
+        request.HTTPMethod = @"GET";
+        [request setTimeoutInterval:1.0];
+        [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
+            
+            if (data) {
+                NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+                NSArray *list = [dict objectForKey:@"list"];
+                //NSLog(@"-%d-%@-list:%@",i,ipItem.ssname,dict);
+                for (int i = 0; i < list.count; i++) {
+                    SessionItem *item = [[SessionItem alloc] init];
+                    item.ssip = ipItem.ssip;
+                    item.ssname = ipItem.ssname;
+                    item.rtt = ipItem.rtt;
+                    item.sessionId = [list objectAtIndex:i];
+                    [self.sessionArrays addObject:item];
+                }
+                
+                if (list.count != 0) {
+                    [self.serIpTableView reloadData];
+                }
+            }
+            kT++;
+            if (needReload && (kT== count)) {
+                [MBProgressHUD hideHUDForView:self.view];
+                if (self.sessionArrays.count == 0) {
+                    [MBProgressHUD showError:@"会话列表为空"];
+                    [self.serIpTableView reloadData];
+                }
+            }
+        }];
+    }
+}
+
+
 - (void)streamPush
 {
-    NSString *port = self.portField.text;
-    //NSDictionary *dict = [self.ipArrays objectAtIndex:_ipSelectIndex];
+    NSString *port = @"8095";
     AddressListItem *item = [self.ipArrays objectAtIndex:_ipSelectIndex];
     double rtt = item.rtt;
-    //NSString *ipAddr = [dict objectForKey:@"ssip"];
     NSString *ipAddr = item.ssip;
+    NSString *ssname = item.ssname;
     NSString *streamPushUrl = nil;
     if (rtt < 40) {
         streamPushUrl = [NSString stringWithFormat:@"http://%@:%@/udprelay/v1/streamPush?streamId=%@&streamCan=%d",ipAddr,port,self.sessionId,0];
     } else {
         streamPushUrl = [NSString stringWithFormat:@"http://%@:%@/udprelay/v1/streamPush?streamId=%@&streamCan=%ld",ipAddr,port,self.sessionId,_segmentSelectIndex];
     }
-    NSLog(@"---rtt : %f",rtt);
+    
     NSLog(@"push url :%@",streamPushUrl);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:streamPushUrl]];
     request.HTTPMethod = @"GET";
@@ -447,13 +497,14 @@
         if (data) {
             NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
             NSDictionary *apInfo = [dict objectForKey:@"apinfo"];
-            NSLog(@"----%@",apInfo);
+            NSLog(@"--push apInfo:--%@",apInfo);
             if (apInfo) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [MBProgressHUD showSuccess:@"获取成功"];
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                     PushViewController *pushVC = [storyboard instantiateViewControllerWithIdentifier:@"PushViewController"];
                     pushVC.apinfoDict = apInfo;
+                    pushVC.ssname = ssname;
                     pushVC.sessionId = self.sessionId;
                     pushVC.block = ^{
                         [self streamRelease];
@@ -474,20 +525,19 @@
 
 - (void)streamPull
 {
-    NSString *port = self.portField.text;
-    //NSDictionary *dict = [self.ipArrays objectAtIndex:_ipSelectIndex];
-    AddressListItem *item = [self.ipArrays objectAtIndex:_ipSelectIndex];
-    //NSString *ipAddr = [dict objectForKey:@"ssip"];
+    NSString *port = @"8095";
+    SessionItem *item = [self.sessionArrays objectAtIndex:_ipSelectIndex];
     double rtt = item.rtt;
     NSString *ipAddr = item.ssip;
-    NSString *sessionId = self.sessionIdField.text;
+    NSString *ssname = item.ssname;
+    NSString *sessionId = item.sessionId;
     NSString *streamPullUrl = nil;
     if (rtt < 40) {
         streamPullUrl = [NSString stringWithFormat:@"http://%@:%@/udprelay/v1/streamPull?streamId=%@&streamCan=%d",ipAddr,port,sessionId,0];
     } else {
         streamPullUrl = [NSString stringWithFormat:@"http://%@:%@/udprelay/v1/streamPull?streamId=%@&streamCan=%ld",ipAddr,port,sessionId,_segmentSelectIndex];
     }
-    NSLog(@"push url :%@",streamPullUrl);
+    NSLog(@"pull url :%@",streamPullUrl);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:streamPullUrl]];
     request.HTTPMethod = @"GET";
     [MBProgressHUD showMessage:@"正在获取接入点" toView:self.view];
@@ -495,15 +545,17 @@
         [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if (data) {
             NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+            NSLog(@"--pull 获取接入点--%@",dict);
             NSDictionary *apInfo = [dict objectForKey:@"apinfo"];
-            NSLog(@"----%@",apInfo);
+            
             if (apInfo) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [MBProgressHUD showSuccess:@"获取成功"];
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
                     PullViewController *pushVC = [storyboard instantiateViewControllerWithIdentifier:@"PullViewController"];
                     pushVC.apinfoDict = apInfo;
-                    pushVC.sessionId = self.sessionId;
+                    pushVC.sessionId = sessionId;
+                    pushVC.ssname = ssname;
                     pushVC.block = ^{
                         [self pullStop];
                     };
@@ -511,7 +563,12 @@
                     [self.navigationController pushViewController:pushVC animated:YES];
                 });
             } else {
-                [MBProgressHUD showError:@"获取失败"];
+                NSString *resultStr = [dict objectForKey:@"result"];
+                if ([resultStr isEqualToString:@"000002"]) {
+                    [MBProgressHUD showError:@"该streamId被占用"];
+                } else {
+                    [MBProgressHUD showError:@"获取失败"];
+                }
             }
             
         } else {
@@ -523,62 +580,45 @@
 
 - (void)streamRelease
 {
-    NSString *port = self.portField.text;
-    //NSDictionary *dict = [self.ipArrays objectAtIndex:_ipSelectIndex];
+    NSString *port = @"8095";
     AddressListItem *item = [self.ipArrays objectAtIndex:_ipSelectIndex];
     NSString *ipAddr = item.ssip;
-    //NSString *ipAddr = [dict objectForKey:@"ssip"];
+    
     NSString *streamReleaseUrl = [NSString stringWithFormat:@"http://%@:%@/udprelay/v1/streamRelease?streamId=%@",ipAddr,port,self.sessionId];
-    NSLog(@"push url :%@",streamReleaseUrl);
+    NSLog(@"push release url :%@",streamReleaseUrl);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:streamReleaseUrl]];
     request.HTTPMethod = @"GET";
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
         if (data) {
             NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            NSLog(@"--streamRelease--%@",dict);
+            NSLog(@"--streamRelease --%@",dict);
         }
     }];
+    
+    NSString *strTip = [NSString stringWithFormat:@"streamRelease?streamId=%@",self.sessionId];
+    NSLog(@"%@",strTip);
 }
 
 
 - (void)pullStop
 {
-    NSString *port = self.portField.text;
-    //NSDictionary *dict = [self.ipArrays objectAtIndex:_ipSelectIndex];
-    AddressListItem *item = [self.ipArrays objectAtIndex:_ipSelectIndex];
+    NSString *port = @"8095";
+    SessionItem *item = [self.sessionArrays objectAtIndex:_ipSelectIndex];
     NSString *ipAddr = item.ssip;
     //NSString *ipAddr = [dict objectForKey:@"ssip"];
-    NSString *sessionId = self.sessionIdField.text;
+    NSString *sessionId = item.sessionId;
     NSString *pullStopUrl = [NSString stringWithFormat:@"http://%@:%@/udprelay/v1/pullStop?streamId=%@",ipAddr,port,sessionId];
-    NSLog(@"push url :%@",pullStopUrl);
+    NSLog(@"pullStop url :%@",pullStopUrl);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:pullStopUrl]];
     request.HTTPMethod = @"GET";
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
         if (data) {
             NSDictionary * dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
-            NSLog(@"--pullStop--%@",dict);
+            NSLog(@"--pullStop rsp:--%@",dict);
         }
     }];
-}
-
-- (void)keyboardWillShow:(NSNotification *)info
-{
-    CGRect keyboardBounds = [[[info userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue];
-    CGRect textRect = self.portField.frame;
-    float textY = self.serInfoTableView.frame.origin.y;
-    float textHeight = textRect.size.height;
-    float keyboardY = keyboardBounds.origin.y;
-    float space = keyboardY-(textY+textHeight+7);
-    if (space > 30.0) {
-        NSLog(@"---not need show %f",space);
-    } else {
-        self.labelTopConstraint.constant = -space-15;
-    }
-}
-
-- (void)keyboardWillHide:(NSNotification *)info
-{
-    self.labelTopConstraint.constant = 2;
+    NSString *strTip = [NSString stringWithFormat:@"pullStop?streamId=%@",sessionId];
+    NSLog(@"%@",strTip);
 }
 
 

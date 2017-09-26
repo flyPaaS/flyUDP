@@ -128,14 +128,26 @@ void Vigo_start(const char *ip, int audioport, int videoport, void *hLocal, void
             g_pAVEngine->get_config(ME_VIDEO_ENC_CFG_MODULE_ID, &stEnc);
             stEnc.usWidth = 360;
             stEnc.usHeight = 480;
-            stEnc.ucMaxFramerate = 15;
-            stEnc.usMaxBitrate = iIndex;
+            stEnc.ucMaxFramerate = 30;
+            stEnc.usMaxBitrate = 2000;
             stEnc.usStartBitrate =350;
             stEnc.usMinBitrate = 30;
             stEnc.ucUseHwEnc = 0;
             stEnc.ucUseHwDec = 0;
             
             g_pAVEngine->set_config(ME_VIDEO_ENC_CFG_MODULE_ID, &stEnc);
+            
+            //set
+            ME_video_camera_param_t param;
+            memset(&param, 0, sizeof(ME_video_camera_param_t));
+            g_pAVEngine->video_get_camera_state(&param);
+            param.usCameraIdx = -1;
+            param.usRotateAngle = -1;
+            param.ucMaxFps = 30;
+            param.usWidth = 640;
+            param.usHeight = 480;
+            
+            g_pAVEngine->video_set_camera(&param);
             
             g_pAVEngine->video_create_stream();
             g_pAVEngine->video_set_stream(&video_para);
