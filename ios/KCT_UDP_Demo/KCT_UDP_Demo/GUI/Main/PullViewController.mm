@@ -61,7 +61,7 @@ static PullViewController *selfPtr;
     [super viewDidLoad];
     
     selfPtr = self;
-    self.title = [NSString stringWithFormat:@"Pull(%@)",self.sessionId];
+    self.title = [NSString stringWithFormat:@"%@(%@)",self.ssname,self.sessionId];
     
     UIBarButtonItem *barButtonItemLeft=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(back:)];
     [[self navigationItem] setLeftBarButtonItem:barButtonItemLeft];
@@ -126,6 +126,15 @@ static PullViewController *selfPtr;
 - (void)thirdTap:(UITapGestureRecognizer *)thirdTap{
     NSLog(@"1个触摸点 3次点击事件触发");
     self.informationLabel.hidden = NO;
+}
+
+- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
+    UITouch * touch = [touches anyObject];
+    if (touch.view == self.localView && self.informationLabel.hidden == NO) {
+        
+        self.informationLabel.hidden = YES;
+        return;
+    }
 }
 
 - (IBAction)switchCameraButtonClick:(UIButton *)button

@@ -129,7 +129,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择服务器地址" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQT-hj-HXM">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择会话中转服务器" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kQT-hj-HXM">
                                 <rect key="frame" x="16" y="66" width="343" height="26"/>
                                 <color key="backgroundColor" red="0.72130789969999998" green="0.72130789969999998" blue="0.72130789969999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -187,10 +187,10 @@
                                 </connections>
                             </tableView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="c3M-A9-upV">
-                                <rect key="frame" x="0.0" y="263" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="263" width="375" height="120"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="b3J-2I-MM1"/>
+                                    <constraint firstAttribute="height" constant="120" id="b3J-2I-MM1"/>
                                 </constraints>
                                 <color key="sectionIndexBackgroundColor" red="1" green="0.1565685393" blue="0.43418172500000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
@@ -240,29 +240,43 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="请选择是否使用flyCan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mtx-IJ-zfe">
-                                                    <rect key="frame" x="20" y="10" width="171" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="PJB-xM-gvg">
-                                                    <rect key="frame" x="20" y="39" width="213" height="29"/>
+                                                    <rect key="frame" x="20" y="36" width="209" height="29"/>
                                                     <segments>
-                                                        <segment title="直接转发"/>
-                                                        <segment title="使用flyCan转发"/>
+                                                        <segment title="公网"/>
+                                                        <segment title="flycan通讯加速"/>
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Mtx-IJ-zfe" firstAttribute="top" secondItem="NbH-Ru-KMD" secondAttribute="top" constant="10" id="DiI-mK-zSE"/>
-                                                <constraint firstItem="PJB-xM-gvg" firstAttribute="top" secondItem="Mtx-IJ-zfe" secondAttribute="bottom" constant="8" id="X5O-EA-P1P"/>
                                                 <constraint firstItem="PJB-xM-gvg" firstAttribute="leading" secondItem="NbH-Ru-KMD" secondAttribute="leading" constant="20" id="esq-Dk-rJa"/>
-                                                <constraint firstItem="Mtx-IJ-zfe" firstAttribute="leading" secondItem="NbH-Ru-KMD" secondAttribute="leading" constant="20" id="zZN-hl-VtF"/>
+                                                <constraint firstItem="PJB-xM-gvg" firstAttribute="centerY" secondItem="NbH-Ru-KMD" secondAttribute="centerY" id="tM5-Oy-3KD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="segmentedContrl" destination="PJB-xM-gvg" id="xfc-Gv-Dgy"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="RefreshTableViewCell" id="Axo-sa-mif" userLabel="RefreshCell" customClass="RefreshTableViewCell">
+                                        <rect key="frame" x="0.0" y="172" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Axo-sa-mif" id="m5s-gD-R0J">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5uj-j9-hoo">
+                                                    <rect key="frame" x="28" y="4.5" width="104" height="33"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <state key="normal" title="刷新会话列表"/>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="5uj-j9-hoo" firstAttribute="leading" secondItem="m5s-gD-R0J" secondAttribute="leadingMargin" constant="20" id="Cde-OX-Dbc"/>
+                                                <constraint firstItem="5uj-j9-hoo" firstAttribute="centerY" secondItem="m5s-gD-R0J" secondAttribute="centerY" id="ChR-o4-v3O"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="button" destination="5uj-j9-hoo" id="uyN-Wb-mAA"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -272,7 +286,7 @@
                                 </connections>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JhS-kv-RaP">
-                                <rect key="frame" x="16" y="483" width="343" height="40"/>
+                                <rect key="frame" x="16" y="403" width="343" height="40"/>
                                 <color key="backgroundColor" red="0.067442590499999996" green="0.58357788710000003" blue="0.043470372370000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="WME-oW-huG"/>
@@ -285,7 +299,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecI-Za-nOt">
-                                <rect key="frame" x="166" y="538" width="42" height="21"/>
+                                <rect key="frame" x="166" y="458" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -311,11 +325,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="Bja-E3-miH"/>
                     <connections>
-                        <outlet property="labelTopConstraint" destination="k0h-qG-A45" id="e80-f9-hEl"/>
                         <outlet property="pullBtn" destination="JhS-kv-RaP" id="dGo-cJ-uKQ"/>
                         <outlet property="serInfoTableView" destination="c3M-A9-upV" id="3hm-2D-Zqr"/>
                         <outlet property="serIpTableView" destination="RoE-W2-iKm" id="FsT-X0-Wmu"/>
-                        <outlet property="versionLabel" destination="ecI-Za-nOt" id="kXD-Q3-Pse"/>
+                        <outlet property="topLabel" destination="kQT-hj-HXM" id="emV-ca-dMp"/>
+                        <outlet property="versionLabel" destination="ecI-Za-nOt" id="OG3-UY-LI8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tc4-gk-4PX" sceneMemberID="firstResponder"/>
