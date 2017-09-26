@@ -92,6 +92,9 @@ public class MainActivity extends Activity {
     // 进度
     private ProgressDialog mProgressDialog = null;
 
+    // 工作状态
+    private boolean bWork = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,10 +110,14 @@ public class MainActivity extends Activity {
         mTextViewCenter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (bWork) {
+                    return;
+                }
                 // 刷新拉流列表
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        bWork = true;
                         mUDPPull.clear();
                         mUDPPullName.clear();
                         mUDPPullServer.clear();
@@ -118,6 +125,8 @@ public class MainActivity extends Activity {
                         for (int i = 0; i < mUDPServerIp.size(); i++) {
                             UpdatePullServer(mUDPServerIp.get(i), mUDPServerList.get(i), mUDPServerName.get(i));
                         }
+                        mHandler.sendEmptyMessage(2000);
+                        bWork = false;
                     }
                 }).start();
             }
@@ -259,10 +268,14 @@ public class MainActivity extends Activity {
                 mLinearLayoutCenter.setVisibility(View.GONE);
                 mTextViewCenter.setVisibility(View.VISIBLE);
 
+                if (bWork) {
+                    return;
+                }
                 // 刷新拉流列表
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        bWork = true;
                         mUDPPull.clear();
                         mUDPPullName.clear();
                         mUDPPullServer.clear();
@@ -270,6 +283,8 @@ public class MainActivity extends Activity {
                         for (int i = 0; i < mUDPServerIp.size(); i++) {
                             UpdatePullServer(mUDPServerIp.get(i), mUDPServerList.get(i), mUDPServerName.get(i));
                         }
+                        mHandler.sendEmptyMessage(2000);
+                        bWork = false;
                     }
                 }).start();
             }
