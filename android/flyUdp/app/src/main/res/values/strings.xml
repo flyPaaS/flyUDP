@@ -10,7 +10,7 @@
     <string name="app_udp_stream_hint">请输入会话ID</string>
     <string name="app_udp_can">请选择是否使用flyCan</string>
     <string name="app_udp_can_1">公网</string>
-    <string name="app_udp_can_2">flyCan通信加速</string>
+    <string name="app_udp_can_2">flyCan通讯加速</string>
     <string name="app_udp_push">Push</string>
     <string name="app_udp_pull">Pull</string>
     <string name="app_udp_tital_push">UdpPush</string>
