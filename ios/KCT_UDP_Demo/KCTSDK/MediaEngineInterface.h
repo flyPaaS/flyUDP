@@ -179,6 +179,11 @@ typedef enum tag_ice_mode
 	eME_ICE_RTPP_MD = 1  /*rtpp proxy mode*/
 } eMeIceMode;
 
+enum tag_media_call_mode
+{
+	eME_CALLMODE_VIDEO = 0,
+	eME_CALLMODE_AUDIO = 1,
+};
 /*****Check codecs supported*****/
 enum eME_codecs_check_method
 {
@@ -330,6 +335,7 @@ typedef struct tag_video_dec
 {	
 	ucpaas_uint32			uiMaxDefinition;		/* reselution negotiation eg 320*240  640*480*/
 	ucpaas_uint8			ucMaxFramerate; /* fps, fps negotiation */
+	ucpaas_uint8			ucScreenType;     // sreen type(0 for 4:3, 1 for 16:9)
 	ucpaas_uint8			reserved[3];
 }ME_video_dec_info_t;
 
@@ -382,6 +388,12 @@ typedef struct tag_video_camera_param
 
 	ucpaas_uint8	reserved[1];
 }ME_video_camera_param_t;
+
+typedef struct tag_screen_resolution_param
+{
+    ucpaas_uint16   usWidth;			/* The actual capture video width */
+    ucpaas_uint16   usHeight;
+}ME_screen_resolution_param_t;
 
 typedef struct tag_video_extern_capture
 {

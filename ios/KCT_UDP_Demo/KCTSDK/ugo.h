@@ -1,16 +1,16 @@
 /***************************************************************************
-** 锞帮喀锟堬鲸锟嬶抗锟擄繍:  Copyright (c) 2014-2019
-** 锟庯縿锞硷烤锟冿炕锞筹繂:  ugo.h
-** 锟庯縿锞硷烤锞憋开锟婏径: 
-** 锟勶繗锟堬繚锟曪惊锟掞惊:  interface define for ugo softphone 
-** 锞碉颈锟囷景锞帮喀锞憋揪:  v1.0
+** 版权所有:  Copyright (c) 2014-2019
+** 文件名称:  ugo.h
+** 文件标识: 
+** 内容摘要:  interface define for ugo softphone 
+** 当前版本:  v1.0
 ** Author  :  Rambo fu
-** 锟嶏开锞筹繅锟堬繒锟嗭繗: 2014锟勶开9锟旓總06锟堬繒
-** 锟愶繛锞革縿锞硷繃锟傦炯: 
-** 锟愶繛锞革縿锟堬繒锟嗭繗: 
-** 锞帮喀锞憋揪锞猴繀: 
-** 锟愶繛锞革縿锟堬繈: 
-** 锟愶繛锞革縿锟勶繗锟堬繚: 
+** 完成日期: 2014年9月06日
+** 修改记录: 
+** 修改日期: 
+** 版本号: 
+** 修改人: 
+** 修改内容: 
 ***************************************************************************/
 
 #ifndef _UGO_INTERFACE_H_
@@ -54,7 +54,7 @@ enum UGo_event_type
 	eUGo_CALL_TRANS_STATE_EV,    // call in trans state changed ev
 	
 	eUGo_NETWORK_EV,	    //network state event
-	
+
 	eUGo_VIDEO_NETWORK_EV,	    //network state event
 	
 	eUGo_UPSINGLEPASS_EV,	//UP RTP single pass
@@ -129,6 +129,11 @@ enum UGo_event_reason
 	eUGo_Reason_ActiveModeConvert       = 71,   //active change to conference mode
 	eUGo_Reason_PassiveModeConvert      = 72,   //passive change to conference mode
 
+	//add by yangxiaoxiang20171212 start
+	eUGo_Reason_UPDATE_ICE				= 78,	//update for ICE mode network.
+	//add by yangxiaoxiang20171212 end
+    eUGo_Reason_UPDATE_CALLMODE         = 79,   //update for call mode
+    
 	/*temporary reason 80~98(notify:80~89,other:90~98)*/
 	eUGo_Reason_NotifyPeerNotFind       = 80,   //call notify peer uid not find
 	eUGo_Reason_NotifyPeerOffLine       = 81,   //call notify peer offline
@@ -220,7 +225,7 @@ typedef struct ugo_cfg_tag
     ucpaas_int32 atype;                         /* account type, value(userid:0, client_num:1) */
     ucpaas_int32 tlv_enabled;                   /* im3.0, use sk tlv protocol stack */
     ucpaas_int32 ipv6_enabled;                  /* enable ipv6, ipv4 will be disabled if ipv6 enabled */
-    ucpaas_int32 csrv_enabled;                  /* custom services version enabled, 0 disabled, 1 enabled */
+	ucpaas_int32 csrv_enabled;                  /* custom services version enabled, 0 disabled, 1 enabled */
     ucpaas_int8  uid[UGO_MAX_USERID_LEN];       /* user count, client_number */
     ucpaas_int8  userid[UGO_MAX_USERID_LEN];    /* userid, for im3.0 */
     ucpaas_int8	 phone[UGO_MAX_PHONE_LEN];      /* user phone number */
@@ -978,7 +983,11 @@ Modified    : 2015/04/28    v1.0.0 VintonLiu
 ucpaas_int32 UGo_delete_conference(int reason);
 
 
-ucpaas_int32 UGo_change_ice_mode(); // yangjj add
+ucpaas_int32 UGo_change_ice_mode(int iMode); // yangjj add
+
+ucpaas_int32 UGo_change_call_mode(int iMode);
+
+ucpaas_int32 UGo_set_local_screen(ME_screen_resolution_param_t *screenParam);
 
 //#ifdef IOS_SET_FILEPATH
 ucpaas_int32 UGo_set_filepath(char *filepath);//add by wuzhaoyang20160407

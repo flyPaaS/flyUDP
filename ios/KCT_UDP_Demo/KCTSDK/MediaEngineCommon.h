@@ -71,6 +71,11 @@ class MediaEngineInterface{
 	/* Get ice mode */
 	virtual int get_ice_mode() = 0;
 
+    virtual int update_call_mode(ucpaas_int32 mode) = 0;
+    virtual int get_call_mode() = 0;
+    virtual int update_local_screen(ME_screen_resolution_param_t *screenParam) = 0;
+    virtual int get_local_screen(ME_screen_resolution_param_t *screenParam) = 0;
+    virtual int update_remote_screen(ME_screen_resolution_param_t *screenParam) = 0;
     /* External transport  audio/video packet receiver */
     virtual int recv_data_packet(const recv_pm_t* recv_pm) = 0;
     ///////////////// COMMON FUNCTIONS END /////////////////////

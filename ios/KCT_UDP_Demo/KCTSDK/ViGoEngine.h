@@ -56,6 +56,11 @@ public:
 	/* Get ice mode */
 	virtual int get_ice_mode();
 	
+    virtual int update_call_mode(ucpaas_int32 mode);
+    virtual int get_call_mode();
+    virtual int update_local_screen(ME_screen_resolution_param_t *screenParam);
+    virtual int get_local_screen(ME_screen_resolution_param_t *screenParam);
+    virtual int update_remote_screen(ME_screen_resolution_param_t *screenParam);
 	virtual int recv_data_packet(const recv_pm_t* recv_pm);
     ///////////////// COMMON FUNCTIONS END /////////////////////
     /////////////////////////////////////////////////////////////
@@ -252,10 +257,6 @@ public:
 #endif
 	///////////////// AUTO TEST FUNCTIONS END /////////////////
     ///////////////////////////////////////////////////////////
-
-	// add by zhouwq
-	virtual int callbacktips(me_tips_data_cb_f cb);
-	// add end
 };
 
 }  // namespace gl_media_engine

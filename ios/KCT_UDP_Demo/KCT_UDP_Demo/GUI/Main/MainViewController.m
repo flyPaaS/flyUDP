@@ -441,7 +441,7 @@
         NSString *url = [NSString stringWithFormat:@"http://%@:8095/udprelay/v1/getStreamList",ipItem.ssip];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:url]];
         request.HTTPMethod = @"GET";
-        [request setTimeoutInterval:1.0];
+        [request setTimeoutInterval:2.0];
         [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse * _Nullable response, NSData * _Nullable data, NSError * _Nullable connectionError) {
             
             if (data) {
@@ -456,17 +456,16 @@
                     item.sessionId = [list objectAtIndex:i];
                     [self.sessionArrays addObject:item];
                 }
-                
-                if (list.count != 0) {
-                    [self.serIpTableView reloadData];
-                }
             }
+            
             kT++;
             if (needReload && (kT== count)) {
+                [self.serIpTableView reloadData];
+                
                 [MBProgressHUD hideHUDForView:self.view];
+                
                 if (self.sessionArrays.count == 0) {
                     [MBProgressHUD showError:@"会话列表为空"];
-                    [self.serIpTableView reloadData];
                 }
             }
         }];

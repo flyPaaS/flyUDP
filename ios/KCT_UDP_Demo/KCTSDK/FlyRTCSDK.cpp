@@ -90,7 +90,7 @@ void Vigo_start(const char *ip, int audioport, int videoport, void *hLocal, void
         //strcpy_s(audio_param.cRemoteAudioIp, ip);
         strcpy(audio_param.cRemoteAudioIp, ip);
         audio_param.iRemoteAudioPort = audioport;
-        audio_param.iLocalAudioPort = 0;
+        audio_param.iLocalAudioPort = audioport;
         audio_param.iPayLoadType = 111;  // opus
         
         unsigned short mulriple = 1;
@@ -110,7 +110,7 @@ void Vigo_start(const char *ip, int audioport, int videoport, void *hLocal, void
             memset(&video_para, 0, sizeof(video_para));
             //strcpy_s(video_para.cRemoteVideoIp, ip);
             strcpy(video_para.cRemoteVideoIp, ip);
-            video_para.iLocalVideoPort = 2;
+            video_para.iLocalVideoPort = videoport;
             video_para.iRemoteVideoPort = videoport;
             video_para.iPayLoadType = 121;  // H.264->121 , H.265->125
             
