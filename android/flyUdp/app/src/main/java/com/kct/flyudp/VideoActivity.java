@@ -280,13 +280,14 @@ public class VideoActivity extends Activity implements View.OnClickListener {
         MainApplication.getInstance().mViGoManager.pub_ViGoSetVideoStream(UGoAPIParam.getInstance().stVideoInfo);
 
         // 创建视频渲染窗口
-        localSurfaceView = new SurfaceView(this);
-        VideoCaptureAndroid.setLocalPreview(localSurfaceView.getHolder());
+        remoteSurfaceView = ViERenderer.CreateRenderer(this, true);
+        localSurfaceView = ViERenderer.CreateRenderer(this, true);
+        VideoCaptureAndroid.setLocalPreview(null);
+
         mLocalWnd.removeAllViews();
         mLocalWnd.addView(localSurfaceView);
         localSurfaceView.setZOrderOnTop(true);
 
-        remoteSurfaceView = ViERenderer.CreateRenderer(this, true);
         mRemoteWnd.removeAllViews();
         mRemoteWnd.addView(remoteSurfaceView);
         // 设置视频渲染参数
